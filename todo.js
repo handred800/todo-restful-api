@@ -11,55 +11,128 @@ let todos = [
   },
 ];
 
-function bodyparser(req, callback) {
-  let body = '';
-
-  req.on('data', chunk => {
-    body += chunk;
-  });
-
-  req.on('end', () => {
-    try {
-      callback(JSON.parse(body));
-    } catch(err) {
-      console.log(err);
-    }
-  })
-}
-
 module.exports = {
   getTodo(uuid) {
     if (uuid === null) {
-      return todos;
+      // 返回全部
+      return {
+        "status": "success",
+        "data": todos
+      }
     } else {
-      return todos.find(todo => todo.uuid === uuid)
+      const index = todos.findIndex(todo => todo.uuid === uuid);
+      if (index !== -1) {
+        return {
+          "status": "success",
+          "data": todos[index]
+        }
+      } else {
+        return {
+          "status": "fail",
+          "message": "查無 ID"
+        }
+      }
+
     }
   },
   createTodo(req) {
-    return bodyparser(req, (data) => {
-      let newTodo = data;
-      newTodo.uuid = uuidv4();
-      todos.push(newTodo);
+    return new Promise((resovle, reject) => {
+
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk;
+      });
+
+      req.on('end', () => {
+        try {
+          let newTodo = JSON.parse(body);
+
+          if (newTodo.title) {
+            newTodo.uuid = uuidv4();
+            todos.push(newTodo);
+            resovle({
+              "status": "success",
+              "message": "todo is created!"
+            });
+          } else {
+            reject({
+              "status": "fail",
+              "message": "沒填寫 title"
+            });
+          }
+        }
+        catch {
+          reject({
+            "status": "fail",
+            "message": "todo 格式錯誤"
+          });
+        }
+      })
+
     })
   },
   updateTodo(uuid, req) {
-    return bodyparser(req, (data) => {
-      const { title } = data;
-      let todo = todos.find(todo => todo.uuid === uuid);
+    return new Promise((resovle, reject) => {
+      let index = todos.findIndex(todo => todo.uuid === uuid);
+      if (index !== -1) {
+        reject({
+          "status": "fail",
+          "message": "查無 ID"
+        })
+      } else {
+        let body = '';
 
-      if(!todo) return false;
+        req.on('data', chunk => {
+          body += chunk;
+        });
 
-      todo.title = title;
-      return true;
-
-    })
+        req.on('end', () => {
+          try {
+            const { title } = JSON.parse(body);
+            if (title) {
+              todos[index].title = title;
+              resovle({
+                "status": "success",
+                "message": "todo is updated!"
+              })
+            } else {
+              reject({
+                "status": "fail",
+                "message": "沒填寫 title"
+              })
+            }
+          }
+          catch {
+            reject({
+              "status": "fail",
+              "message": "todo 格式錯誤"
+            });
+          }
+        })
+      }
+    });
   },
   deleteTodo(uuid) {
-    if(uuid === null) {
+    if (uuid === null) {
       todos = [];
-    } else {      
+      return {
+        "status": "fail",
+        "message": "todo 格式錯誤"
+      }
+    } else {
       const index = todos.findIndex(todo => todo.uuid === uuid);
-      todos.splice(index, 1);
+      if(index !== -1) {
+        todos.splice(index, 1);
+        return {
+          "status": "success",
+          "message": "todo is deleted!"
+        }
+      } else {
+        return {
+          "status": "fail",
+          "message": "查無 ID"
+        }
+      }
     }
   },
 }

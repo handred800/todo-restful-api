@@ -10,55 +10,61 @@ const requestListener = (req, res) => {
   }
   const method = req.method;
   const url = req.url;
-  const id = (() => {
-    let params = url.split('/').filter(param => param !== '');
-    return params.length > 1 ? params[1] : null;
-  })();
+  const params = url.split('/').filter(param => param !== '');
 
-  switch (method) {
-    case 'GET': // 取得 todo
-      let todos = todo.getTodo(id);
-      endRespond({
-        "status": "success",
-        "data": todos
-      })
-      break;
+  const category = params[0] || null;
+  const id = params[1] || null;
 
-    case 'POST': // 新增 todo
-      todo.createTodo(req);
-      endRespond({
-        "status": "success",
-        "message": "to do is created!"
-      })
-      break;
-
-    case 'PATCH': // 修改 todo
-      if (id) {
-        todo.updateTodo(id, req);
-        endRespond({
-          "status": "success",
-          "message": "todo was updated!"
-        })
-      } else {
-        endRespond({
-          "status": "fail",
-          "message": "id is required!"
-        }, 400)
+  if (category === 'todo') {
+    switch (method) {
+      case 'GET': {// 取得 todo
+        const res = todo.getTodo(id);
+        endRespond(res);
+        break;
       }
-      break;
-
-    case 'DELETE': // 刪除 todo
-      todo.deleteTodo(id);
-      endRespond({
-        "status": "success",
-        "message": "todo was deleted"
-      })
-      break;
-
-    default:
-      console.log('do nothing');
-      break;
+      case 'POST': {// 新增 todo
+        todo.createTodo(req)
+          .then((res) => {
+            endRespond(res);
+          })
+          .catch((err) => {
+            endRespond(err, 400);
+          });
+        break;
+      }
+      case 'PATCH': {// 修改 todo
+        if (id) {
+          todo.updateTodo(id, req)
+            .then((res) => {
+              endRespond(res);
+            })
+            .catch((err) => {
+              endRespond(err, 400);
+            });
+        } else {
+          endRespond({
+            "status": "fail",
+            "message": "未指定 todo id"
+          }, 400)
+        }
+        break;
+      }
+      case 'DELETE': { // 刪除 todo
+        const res = todo.deleteTodo(id);
+        endRespond(res);
+        break;
+      }
+      default:
+        console.log('do nothing');
+        break;
+    }
+  } else {
+    endRespond({
+      "status": "fail",
+      "message": "page not found"
+    }, 404)
   }
+
 
   function endRespond(result, statusCode = 200) {
     res.writeHead(statusCode, headers);
