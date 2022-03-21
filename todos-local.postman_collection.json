@@ -11,12 +11,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/todo",
-					"protocol": "http",
+					"raw": "https://todo-pratice-api.herokuapp.com/todo",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"todo-pratice-api",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"todo"
 					]
@@ -39,12 +40,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/todo",
-					"protocol": "http",
+					"raw": "https://todo-pratice-api.herokuapp.com/todo",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"todo-pratice-api",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"todo"
 					]
@@ -58,14 +60,16 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/todo",
-					"protocol": "http",
+					"raw": "https://todo-pratice-api.herokuapp.com/todo/486fcb8d-10ee-40ac-b05b-34af15c7b7af",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"todo-pratice-api",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
-						"todo"
+						"todo",
+						"486fcb8d-10ee-40ac-b05b-34af15c7b7af"
 					]
 				}
 			},
@@ -86,14 +90,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/todo",
-					"protocol": "http",
+					"raw": "https://todo-pratice-api.herokuapp.com/todo/486fcb8d-10ee-40ac-b05b-34af15c7b7af",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"todo-pratice-api",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
-						"todo"
+						"todo",
+						"486fcb8d-10ee-40ac-b05b-34af15c7b7af"
 					]
 				}
 			},
