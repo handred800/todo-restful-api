@@ -10,10 +10,11 @@ const requestListener = (req, res) => {
   }
   const method = req.method;
   const url = req.url;
-  const params = url.split('/').filter(param => param !== '');
+  const params = url.split('/').slice(1); // 第一個 "/" 不算
 
+  console.log(params[1]);
   const category = params[0] || null;
-  const id = params[1] || null;
+  const id = params[1] !== null ? params[1] : null;
 
   if (category === 'todo') {
     switch (method) {
@@ -50,12 +51,12 @@ const requestListener = (req, res) => {
         break;
       }
       case 'DELETE': { // 刪除 todo
+        console.log(id);
         const res = todo.deleteTodo(id);
         endRespond(res);
         break;
       }
       default:
-        console.log('do nothing');
         break;
     }
   } else {

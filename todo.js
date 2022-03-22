@@ -52,7 +52,7 @@ module.exports = {
             todos.push(newTodo);
             resovle({
               "status": "success",
-              "message": "todo is created!"
+              "data": todos
             });
           } else {
             reject({
@@ -75,11 +75,6 @@ module.exports = {
     return new Promise((resovle, reject) => {
       let index = todos.findIndex(todo => todo.uuid === uuid);
       if (index !== -1) {
-        reject({
-          "status": "fail",
-          "message": "查無 ID"
-        })
-      } else {
         let body = '';
 
         req.on('data', chunk => {
@@ -109,6 +104,12 @@ module.exports = {
             });
           }
         })
+
+      } else {
+        reject({
+          "status": "fail",
+          "message": "查無 ID"
+        })
       }
     });
   },
@@ -116,8 +117,8 @@ module.exports = {
     if (uuid === null) {
       todos = [];
       return {
-        "status": "fail",
-        "message": "todo 格式錯誤"
+        "status": "success",
+        "message": "all todo is deleted!"
       }
     } else {
       const index = todos.findIndex(todo => todo.uuid === uuid);
