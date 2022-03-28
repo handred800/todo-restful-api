@@ -18,11 +18,6 @@ const requestListener = (req, res) => {
 
   if (category === 'todo') {
     switch (method) {
-      case 'GET': {// 取得 todo
-        const res = todo.getTodo(id);
-        endRespond(res);
-        break;
-      }
       case 'POST': {// 新增 todo
         todo.createTodo(req)
           .then((res) => {
@@ -50,6 +45,20 @@ const requestListener = (req, res) => {
         }
         break;
       }
+      default:
+        endRespond({
+          "status": "fail",
+          "message": "bad request"
+        }, 400)
+        break;
+    }
+  } else if (category === 'todos') {
+    switch (method) {
+      case 'GET': {// 取得 todo
+        const res = todo.getTodo(id);
+        endRespond(res);
+        break;
+      }
       case 'DELETE': { // 刪除 todo
         console.log(id);
         const res = todo.deleteTodo(id);
@@ -57,6 +66,10 @@ const requestListener = (req, res) => {
         break;
       }
       default:
+        endRespond({
+          "status": "fail",
+          "message": "bad request"
+        }, 400)
         break;
     }
   } else {

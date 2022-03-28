@@ -12,7 +12,7 @@ let todos = [
 ];
 
 module.exports = {
-  getTodo(uuid) {
+  getTodo(uuid = null) {
     if (uuid === null) {
       // 返回全部
       return {
@@ -113,7 +113,7 @@ module.exports = {
       }
     });
   },
-  deleteTodo(uuid) {
+  deleteTodo(uuid = null) {
     if (uuid === null) {
       todos = [];
       return {

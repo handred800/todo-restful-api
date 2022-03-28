@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://todo-pratice-api.herokuapp.com/todo",
+					"raw": "https://todo-pratice-api.herokuapp.com/todos",
 					"protocol": "https",
 					"host": [
 						"todo-pratice-api",
@@ -19,7 +19,7 @@
 						"com"
 					],
 					"path": [
-						"todo"
+						"todos"
 					]
 				}
 			},
@@ -60,7 +60,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://todo-pratice-api.herokuapp.com/todo/486fcb8d-10ee-40ac-b05b-34af15c7b7af",
+					"raw": "https://todo-pratice-api.herokuapp.com/todos/486fcb8d-10ee-40ac-b05b-34af15c7b7af",
 					"protocol": "https",
 					"host": [
 						"todo-pratice-api",
@@ -68,7 +68,7 @@
 						"com"
 					],
 					"path": [
-						"todo",
+						"todos",
 						"486fcb8d-10ee-40ac-b05b-34af15c7b7af"
 					]
 				}
@@ -81,7 +81,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://todo-pratice-api.herokuapp.com/todo",
+					"raw": "https://todo-pratice-api.herokuapp.com/todos",
 					"protocol": "https",
 					"host": [
 						"todo-pratice-api",
@@ -89,7 +89,7 @@
 						"com"
 					],
 					"path": [
-						"todo"
+						"todos"
 					]
 				}
 			},
